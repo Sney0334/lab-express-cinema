@@ -4,21 +4,21 @@ const router = express.Router();
 const Movie = require('../models/Movie.model')
 
 /* GET home page */
-router.get('/', (req, res, next) => res.render('index'));
+router.get('/', (req, res, next) => res.render('index',{titlt: 'Cinema'}));
 
 //get movies
-router.get('/movies', (req, res)=>{
+router.get('/movies', (req, res, next)=>{
     Movie.find()
     .then((movies)=>{
-        res.render('../views/movies',{movies})
+        res.render('views/movies',{movies})
     })
 })
 
-router.get('/movies/:id', (req, res)=>{
-const {id} = req.params;
+router.get('/movies/:id', (req, res, next)=>{
+const {id} = req.params.id;
 Movie.findById(id)
 .then((movie)=>{
-    return res.render('../views/movie-details.hbs',{movie})
+    return res.render('views/movie-details.hbs',{movie})
 })
 .catch((err)=>{
     console.log(err)
